@@ -1,15 +1,8 @@
-/**
- * YOKTOGEL PORTAL - Single File Google Apps Script (Code.gs)
- * Author: Rifaldo NSt
- */
-
-function doGet(e) {
-  var htmlContent = `
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YOKTOGEL PORTAL</title>
 
   <style>
@@ -501,7 +494,7 @@ function doGet(e) {
       .then(data => {
         document.getElementById("ip").innerText = data.ip || "Unknown";
         document.getElementById("loc").innerText = (data.city && data.country_name) 
-          ? \`\${data.city}, \${data.country_name}\` 
+          ? `${data.city},${data.country_name}` 
           : "Unknown";
       })
       .catch(() => {
@@ -535,10 +528,3 @@ function doGet(e) {
 
 </body>
 </html>
-  `;
-
-  return HtmlService.createHtmlOutput(htmlContent)
-    .setTitle('YOKTOGEL PORTAL')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
-}
