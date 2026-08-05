@@ -423,8 +423,8 @@
 
   <!-- INFO IP & LOKASI -->
   <div class="glass">
-    🌐 IP : <span id="ip">Loading...</span><br>
-    📍 Lokasi : <span id="loc">Loading...</span>
+    🌐 IP : <span id="ip">Mendeteksi...</span><br>
+    📍 Lokasi : <span id="loc">Mendeteksi...</span>
   </div>
 
   <!-- TOMBOL AUTO KLIK -->
@@ -488,19 +488,50 @@
       });
     }
 
-    /* FETCH IP & LOCATION */
-    fetch("https://ipapi.co/json/")
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("ip").innerText = data.ip || "Unknown";
-        document.getElementById("loc").innerText = (data.city && data.country_name) 
-          ? `${data.city},${data.country_name}` 
-          : "Unknown";
-      })
-      .catch(() => {
-        document.getElementById("ip").innerText = "Protected / N/A";
-        document.getElementById("loc").innerText = "Hidden";
-      });
+    /* MULTI-API FALLBACK UNTUK IP & LOKASI */
+    async function fetchUserIP() {
+      const ipElem = document.getElementById("ip");
+      const locElem = document.getElementById("loc");
+
+      // Percobaan 1: ipwho.is (Layanan HTTPS cepat & stabil)
+      try {
+        const res = await fetch("https://ipwho.is/");
+        const data = await res.json();
+        if (data.success) {
+          ipElem.innerText = data.ip || "N/A";
+          locElem.innerText = `${data.city || 'Unknown'}, ${data.country || 'Unknown'}`;
+          return;
+        }
+      } catch (e) {}
+
+      // Percobaan 2: ipapi.co (Layanan Cadangan)
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+        if (data.ip) {
+          ipElem.innerText = data.ip;
+          locElem.innerText = `${data.city || 'Unknown'}, ${data.country_name || 'Unknown'}`;
+          return;
+        }
+      } catch (e) {}
+
+      // Percobaan 3: ipify (Mengambil IP jika geolokasi terblokir)
+      try {
+        const res = await fetch("https://api.ipify.org?format=json");
+        const data = await res.json();
+        if (data.ip) {
+          ipElem.innerText = data.ip;
+          locElem.innerText = "Protected / Blocked";
+          return;
+        }
+      } catch (e) {}
+
+      // Jika seluruh API diblokir oleh AdBlocker/DNS lokal Pengunjung
+      ipElem.innerText = "Protected";
+      locElem.innerText = "Hidden";
+    }
+
+    fetchUserIP();
 
     /* FIRE PARTICLES GENERATOR */
     function createFireParticle() {
