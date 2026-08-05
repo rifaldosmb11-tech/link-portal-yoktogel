@@ -16,7 +16,7 @@ return HtmlService.createHtmlOutput(`
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Segoe UI,sans-serif;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body{
@@ -60,37 +60,92 @@ body{
   }
 }
 
-/* SNOW */
-.snow{
+/* FIRE PARTICLES CONTAINER (MENGGANTIKAN SNOW) */
+.fire-container{
   position:fixed;
   inset:0;
   pointer-events:none;
   z-index:-4;
 }
 
-.snowflake{
+.fire-particle{
   position:absolute;
-  top:-10px;
-  color:#fff;
-  animation:fall linear infinite;
+  bottom:-20px;
+  color:#ff4500;
+  text-shadow: 
+    0 0 8px #ff4500,
+    0 0 15px #ff7700,
+    0 0 25px #ff0000;
+  animation:riseFire linear infinite;
 }
 
-@keyframes fall{
-  to{transform:translateY(110vh);}
+@keyframes riseFire{
+  0% {
+    transform: translateY(0) scale(0.6) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.3) rotate(360deg);
+    opacity: 0;
+  }
 }
 
+/* HEADER BERANIMASI WARNA-WARNI GLOW & TIMBUL */
 .header{
   margin-top:70px;
   text-align:center;
-  font-size:48px;
+  font-size:clamp(32px, 6vw, 56px);
   font-weight:900;
   letter-spacing:3px;
-  color:#fff;
-  text-shadow:
-  0 0 10px #ff0000,
-  0 0 20px #ff0000,
-  0 0 40px #ff0000,
-  0 0 60px #ff0000;
+  position: relative;
+  
+  /* Gradien Teks Warna-Warni Vivid Neon */
+  background: linear-gradient(90deg, #ff0055, #ffdd00, #00ffcc, #0099ff, #ff00ff, #ff0055);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* Animasi Bergerak Warna + Melayang + Glow Neon */
+  animation: 
+    rainbowShift 5s ease infinite,
+    floatHeader 3s ease-in-out infinite alternate,
+    neonPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes rainbowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floatHeader {
+  0% {
+    transform: translateY(0px) scale(1);
+  }
+  100% {
+    transform: translateY(-8px) scale(1.03);
+  }
+}
+
+@keyframes neonPulse {
+  0% {
+    filter: drop-shadow(0 0 10px rgba(255, 0, 85, 0.8)) 
+            drop-shadow(0 0 20px rgba(0, 255, 204, 0.6)) 
+            drop-shadow(0 4px 10px #000);
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(255, 221, 0, 1)) 
+            drop-shadow(0 0 45px rgba(0, 153, 255, 0.8)) 
+            drop-shadow(0 0 60px rgba(255, 0, 255, 0.6));
+  }
+  100% {
+    filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.9)) 
+            drop-shadow(0 0 30px rgba(255, 0, 85, 0.7)) 
+            drop-shadow(0 6px 12px #000);
+  }
 }
 
 /* RUNNING TEXT */
@@ -166,6 +221,7 @@ body{
 
   animation:pulseGold 2s infinite;
 }
+
 @keyframes pulseGold{
   0%{
     transform:scale(1);
@@ -189,6 +245,7 @@ body{
       0 0 20px rgba(255,215,0,.3);
   }
 }
+
 .auto::before{
   content:'';
   position:absolute;
@@ -330,7 +387,7 @@ body{
 
 .quick-btn::after {
   right: 3px;
-  animation: sparkRightAlways 1.2s infinite ease-in-out 0.6s; /* Offset waktu biar bergantian */
+  animation: sparkRightAlways 1.2s infinite ease-in-out 0.6s;
 }
 
 /* Efek Saat Kursor Diarahkan (Makin Intens & Mengangkat) */
@@ -394,13 +451,30 @@ body{
 /* kalau aktif */
 .gopath-menu.active .gopath-content{
   display:block;
-}</style>
+}
+
+/* HAK CIPTA DI POJOK KIRI KECIL */
+.copyright-label {
+  position: fixed;
+  bottom: 8px;
+  left: 12px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 999999;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 5px rgba(0,0,0,0.8);
+}
+</style>
 </head>
 
 <body>
 
 <div class="bg"></div>
-<div class="snow" id="snow"></div>
+<div class="fire-container" id="fireContainer"></div>
+
+<!-- HAK CIPTA KECIL POJOK KIRI -->
+<div class="copyright-label">© Hak Cipta Rifaldo NSt</div>
 
 <div class="running">
   <span>"JANGAN TERLALU MENGEJAR WANITA, BIAR WANITA YANG MENGEJARMU _ BY KO AL"</span>
@@ -496,19 +570,27 @@ document.getElementById("ip").innerText=d.ip;
 document.getElementById("loc").innerText=d.city+", "+d.country_name;
 });
 
-/* SNOW */
-function snow(){
-const s=document.getElementById("snow");
-const e=document.createElement("div");
-e.className="snowflake";
-e.innerHTML="❄";
-e.style.left=Math.random()*window.innerWidth+"px";
-e.style.animationDuration=(2+Math.random()*5)+"s";
-e.style.fontSize=(10+Math.random()*18)+"px";
-s.appendChild(e);
-setTimeout(()=>e.remove(),9000);
+/* FIRE PARTICLES GENERATOR */
+function createFireParticle(){
+  const fireContainer = document.getElementById("fireContainer");
+  const particle = document.createElement("div");
+  
+  const fireIcons = ["🔥", "✨", "💥", "•"];
+  particle.className = "fire-particle";
+  particle.innerHTML = fireIcons[Math.floor(Math.random() * fireIcons.length)];
+  
+  particle.style.left = Math.random() * window.innerWidth + "px";
+  
+  const duration = 2 + Math.random() * 4;
+  particle.style.animationDuration = duration + "s";
+  particle.style.fontSize = (12 + Math.random() * 20) + "px";
+  
+  fireContainer.appendChild(particle);
+  
+  setTimeout(() => particle.remove(), duration * 1000);
 }
-setInterval(snow,60);
+
+setInterval(createFireParticle, 70);
 
 // GOPATH TOGGLE CLICK (FIX MOBILE + DESKTOP)
 document.addEventListener("DOMContentLoaded",function(){
@@ -517,8 +599,8 @@ document.addEventListener("DOMContentLoaded",function(){
   const btn  = document.querySelector(".gopath-btn");
 
   btn.addEventListener("click",function(e){
-  window.open("https://gopath.id/link_yoktogel","_blank");
-});
+    window.open("https://gopath.id/link_yoktogel","_blank");
+  });
 
   document.addEventListener("click",function(){
     menu.classList.remove("active");
@@ -549,7 +631,3 @@ GOPATH YOKTOGEL
 
 </body>
 </html>
-
-`);
-
-}
