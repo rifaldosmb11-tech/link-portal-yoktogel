@@ -45,34 +45,23 @@
       100% { transform: scale(1); }
     }
 
-    /* LAYOUT WRAPPER */
-    .main-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 25px;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* CONTAINER KIRI (PREMIUM BULK OPENER) */
-    .left-panel {
-      width: 330px;
-      margin-top: 20px;
-      background: rgba(10, 5, 18, 0.75);
-      backdrop-filter: blur(16px);
-      border-radius: 20px;
-      padding: 20px;
-      position: relative;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 128, 0.3);
-      flex-shrink: 0;
+    /* PANEL AUTO OPENER DI UJUNG KIRI MELAYANG (FLOATING LEFT) */
+    .left-panel-floating {
+      position: fixed;
+      top: 50px;
+      left: 15px;
+      width: 250px;
+      background: rgba(10, 5, 18, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 14px;
+      padding: 12px;
+      z-index: 999;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 0, 128, 0.4);
+      border: 1px solid rgba(255, 0, 128, 0.5);
       overflow: hidden;
-      border: 1px solid rgba(255, 0, 128, 0.4);
     }
 
-    .left-panel::before {
+    .left-panel-floating::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; height: 3px;
@@ -80,85 +69,85 @@
       animation: rainbowShift 3s linear infinite;
     }
 
-    .left-panel h3 {
-      font-size: 15px;
+    .left-panel-floating h3 {
+      font-size: 12px;
       text-align: center;
       color: #fff;
-      margin-bottom: 15px;
+      margin-bottom: 8px;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       font-weight: 800;
-      text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+      text-shadow: 0 0 8px #ff0055;
     }
 
     .bulk-textarea {
       width: 100%;
-      height: 200px;
-      background: rgba(0, 0, 0, 0.75);
+      height: 110px;
+      background: rgba(0, 0, 0, 0.8);
       border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 12px;
+      border-radius: 8px;
       color: #00ffcc;
-      padding: 12px;
-      font-size: 12px;
+      padding: 8px;
+      font-size: 11px;
       font-family: 'Consolas', monospace;
-      resize: vertical;
+      resize: none;
       outline: none;
-      margin-bottom: 15px;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
-      transition: all 0.3s ease;
+      margin-bottom: 8px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.9);
     }
 
     .bulk-textarea:focus {
       border-color: #00ffcc;
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.4), inset 0 0 10px rgba(0,0,0,0.9);
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
     }
 
     .bulk-controls {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 6px;
     }
 
     .delay-input-group {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 13px;
+      font-size: 11px;
       color: #e0e0e0;
       font-weight: 600;
       background: rgba(255, 255, 255, 0.05);
-      padding: 8px 12px;
-      border-radius: 8px;
+      padding: 4px 8px;
+      border-radius: 6px;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .delay-input-group input {
-      width: 65px;
-      padding: 5px;
+      width: 50px;
+      padding: 2px 4px;
       background: #000;
       border: 1px solid #ffd700;
       color: #ffd700;
-      border-radius: 6px;
+      border-radius: 4px;
       text-align: center;
       font-weight: bold;
+      font-size: 11px;
       outline: none;
     }
 
     .bulk-btn-open {
       width: 100%;
-      padding: 14px;
+      padding: 8px;
       background: linear-gradient(135deg, #ff0055, #ff5500, #ffaa00);
       background-size: 200% 200%;
       border: none;
-      border-radius: 12px;
+      border-radius: 8px;
       color: #fff;
       font-weight: 900;
-      font-size: 14px;
+      font-size: 11px;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
-      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+      transition: all 0.2s ease;
       animation: gradientMove 3s ease infinite;
     }
 
@@ -169,18 +158,18 @@
     }
 
     .bulk-btn-open:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 0 25px rgba(255, 0, 85, 0.9), 0 0 10px rgba(255, 215, 0, 0.8);
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(255, 0, 85, 0.8);
     }
 
     .bulk-btn-clear {
       width: 100%;
-      padding: 9px;
+      padding: 5px;
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      color: #ccc;
-      font-size: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      color: #aaa;
+      font-size: 10px;
       font-weight: bold;
       cursor: pointer;
       transition: all 0.2s;
@@ -188,13 +177,7 @@
 
     .bulk-btn-clear:hover {
       background: rgba(255, 0, 85, 0.2);
-      border-color: #ff0055;
       color: #fff;
-    }
-
-    .center-content {
-      flex-grow: 1;
-      max-width: 650px;
     }
 
     /* FIRE PARTICLES CONTAINER */
@@ -232,7 +215,7 @@
 
     /* HEADER WARNA-WARNI GLOW & NEON */
     .header {
-      margin-top: 50px;
+      margin-top: 70px;
       text-align: center;
       font-size: clamp(32px, 6vw, 56px);
       font-weight: 900;
@@ -555,18 +538,17 @@
     }
 
     /* RESPONSIVE LAYOUT UNTUK HP */
-    @media (max-width: 900px) {
-      .main-wrapper {
-        flex-direction: column;
-        align-items: center;
-      }
-      .left-panel {
+    @media (max-width: 1100px) {
+      .left-panel-floating {
+        position: relative;
+        top: 0;
+        left: 0;
         width: 100%;
         max-width: 420px;
-        margin-top: 10px;
+        margin: 15px auto;
       }
       .header {
-        margin-top: 60px;
+        margin-top: 50px;
       }
     }
   </style>
@@ -585,72 +567,64 @@
     <span>"JANGAN TERLALU MENGEJAR WANITA, BIAR WANITA YANG MENGEJARMU _ BY KO AL"</span>
   </div>
 
+  <!-- PANEL KIRI SLIM & FLOATING (POJOK KIRI UJUNG) -->
+  <div class="left-panel-floating">
+    <h3>⚡ AUTO OPENER LINK ⚡</h3>
+    <textarea id="bulkLinks" class="bulk-textarea" placeholder="Tempel link di sini...&#10;&#10;Contoh:&#10;https://domain1.com&#10;https://domain2.com"></textarea>
+    
+    <div class="bulk-controls">
+      <div class="delay-input-group">
+        <label for="delayInput">Jeda (dtk):</label>
+        <input type="number" id="delayInput" value="0.3" min="0.1" step="0.1">
+      </div>
+      <button class="bulk-btn-open" onclick="openBulkLinks()">🚀 BUKA SEMUA LINK</button>
+      <button class="bulk-btn-clear" onclick="document.getElementById('bulkLinks').value=''">Bersihkan</button>
+    </div>
+  </div>
+
   <!-- HEADER -->
   <div class="header">☠️YOKTOGEL PORTAL☠️</div>
 
-  <!-- MAIN WRAPPER CONTAINER -->
-  <div class="main-wrapper">
-
-    <!-- PANEL KIRI PREMIUM (BULK LINK OPENER) -->
-    <div class="left-panel">
-      <h3>⚡ AUTO OPENER LINK ⚡</h3>
-      <textarea id="bulkLinks" class="bulk-textarea" placeholder="Tempel banyak link di sini...&#10;&#10;Contoh:&#10;https://domain1.com&#10;https://domain2.com&#10;&#10;(Otomatis buka tab baru)"></textarea>
-      
-      <div class="bulk-controls">
-        <div class="delay-input-group">
-          <label for="delayInput">Jeda Buka (Detik):</label>
-          <input type="number" id="delayInput" value="0.3" min="0.1" step="0.1">
-        </div>
-        <button class="bulk-btn-open" onclick="openBulkLinks()">🚀 BUKA SEMUA LINK SEKALIGUS</button>
-        <button class="bulk-btn-clear" onclick="document.getElementById('bulkLinks').value=''">Bersihkan Teks</button>
-      </div>
-    </div>
-
-    <!-- UTAMA / KONTEN TENGAH -->
-    <div class="center-content">
-      <!-- INFO IP & LOKASI -->
-      <div class="glass">
-        🌐 IP : <span id="ip">Mendeteksi...</span><br>
-        📍 Lokasi : <span id="loc">Mendeteksi...</span>
-      </div>
-
-      <!-- TOMBOL AUTO KLIK -->
-      <button class="auto" onclick="openAll('domain')">🚀 AUTO KLIK DOMAIN</button>
-      <button class="auto" onclick="openAll('landing')">🌎 AUTO KLIK LANDINGPAGE</button>
-
-      <!-- MENU GRID BUTTONS -->
-      <div class="menu-grid">
-        <button class="quick-btn" onclick="window.open('https://yoktogel95.com')">FUSION X 1</button>
-        <button class="quick-btn" onclick="window.open('https://dkwl.b-cdn.net/d/yoktogel-kl2/register')">DKWL REGISTER</button>
-        <button class="quick-btn" onclick="window.open('https://rtpslotyok660.com')">RTP</button>
-
-        <button class="quick-btn" onclick="window.open('https://yoktogel75.com')">FUSION X 2</button>
-        <button class="quick-btn" onclick="window.open('https://jalursitus.com/yoktogel')">LINK JALUR</button>
-        <button class="quick-btn" onclick="window.open('https://apkstore.vip/pwa/26548439')">❄️APK ANDROID</button>
-
-        <button class="quick-btn" onclick="window.open('https://dkwl.b-cdn.net/yoktogel-kl1')">DKWL 1</button>
-        <button class="quick-btn" onclick="window.open('https://yoktogel.it.com')">DOMAIN IT</button>
-        <button class="quick-btn" onclick="window.open('https://apkstore.vip/26548439/')">🍏APK IOS</button>
-
-        <button class="quick-btn" onclick="window.open('https://dkwl.b-cdn.net/yoktogel-kl2')">DKWL 2</button>
-        <button class="quick-btn" onclick="window.open('https://yokblog99.net')">BLOG</button>
-        <button class="quick-btn" onclick="window.open('https://www.google.com/search?q=yoktogel')">LANDING RANK</button>
-      </div>
-
-      <!-- GOPATH MENU -->
-      <div class="gopath-center-container">
-        <button class="gopath-animated-btn" onclick="window.open('https://gopath.id/link_yoktogel', '_blank')">
-          🔗 LINK GOPATH YOKTOGEL
-        </button>
-      </div>
-
-      <div class="footer">FULL STABLE VERSION - READY DEPLOY</div>
-    </div>
-
+  <!-- INFO IP & LOKASI -->
+  <div class="glass">
+    🌐 IP : <span id="ip">Mendeteksi...</span><br>
+    📍 Lokasi : <span id="loc">Mendeteksi...</span>
   </div>
 
+  <!-- TOMBOL AUTO KLIK -->
+  <button class="auto" onclick="openAll('domain')">🚀 AUTO KLIK DOMAIN</button>
+  <button class="auto" onclick="openAll('landing')">🌎 AUTO KLIK LANDINGPAGE</button>
+
+  <!-- MENU GRID BUTTONS -->
+  <div class="menu-grid">
+    <button class="quick-btn" onclick="window.open('https://yoktogel95.com')">FUSION X 1</button>
+    <button class="quick-btn" onclick="window.open('https://dkwl.b-cdn.net/d/yoktogel-kl2/register')">DKWL REGISTER</button>
+    <button class="quick-btn" onclick="window.open('https://rtpslotyok660.com')">RTP</button>
+
+    <button class="quick-btn" onclick="window.open('https://yoktogel75.com')">FUSION X 2</button>
+    <button class="quick-btn" onclick="window.open('https://jalursitus.com/yoktogel')">LINK JALUR</button>
+    <button class="quick-btn" onclick="window.open('https://apkstore.vip/pwa/26548439')">❄️APK ANDROID</button>
+
+    <button class="quick-btn" onclick="window.open('https://dkwl.b-cdn.net/yoktogel-kl1')">DKWL 1</button>
+    <button class="quick-btn" onclick="window.open('https://yoktogel.it.com')">DOMAIN IT</button>
+    <button class="quick-btn" onclick="window.open('https://apkstore.vip/26548439/')">🍏APK IOS</button>
+
+    <button class="quick-btn" onclick="window.open('https://dkwl.b-cdn.net/yoktogel-kl2')">DKWL 2</button>
+    <button class="quick-btn" onclick="window.open('https://yokblog99.net')">BLOG</button>
+    <button class="quick-btn" onclick="window.open('https://www.google.com/search?q=yoktogel')">LANDING RANK</button>
+  </div>
+
+  <!-- GOPATH MENU -->
+  <div class="gopath-center-container">
+    <button class="gopath-animated-btn" onclick="window.open('https://gopath.id/link_yoktogel', '_blank')">
+      🔗 LINK GOPATH YOKTOGEL
+    </button>
+  </div>
+
+  <div class="footer">FULL STABLE VERSION - READY DEPLOY</div>
+
   <script>
-    /* FUNGSI UTAMA: BUKA BANYAK LINK SEKALIGUS (FIXED & TESTED) */
+    /* FUNGSI UTAMA: BUKA BANYAK LINK SEKALIGUS */
     function openBulkLinks() {
       const text = document.getElementById("bulkLinks").value;
       const delayInput = parseFloat(document.getElementById("delayInput").value);
@@ -661,14 +635,12 @@
         return;
       }
 
-      // Memisah baris/koma/spasi
       const rawLines = text.split(/[\n,\s]+/);
       const validUrls = [];
 
       rawLines.forEach(function(line) {
         var url = line.trim();
         if (url.length > 0) {
-          // Menambahkan https:// jika user mengetik domain polos
           if (!url.match(/^https?:\/\//i)) {
             url = "https://" + url;
           }
@@ -681,7 +653,6 @@
         return;
       }
 
-      // Membuka tab satu per satu berurutan dengan interval delay
       validUrls.forEach(function(url, index) {
         setTimeout(function() {
           window.open(url, "_blank");
