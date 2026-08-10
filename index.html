@@ -45,28 +45,52 @@
       100% { transform: scale(1); }
     }
 
-    /* PANEL AUTO OPENER DI UJUNG KIRI MELAYANG (FLOATING LEFT) */
-    .left-panel-floating {
+    /* WRAPPER PANEL AUTO OPENER LINK (ANIMASI BORDER WARNA-WARNI BERGERAK MENGELILINGI PANEL) */
+    .left-panel-wrapper {
       position: fixed;
       top: 50px;
       left: 15px;
       width: 250px;
-      background: rgba(10, 5, 18, 0.85);
+      border-radius: 16px;
+      padding: 2px; /* Ketebalan garis border */
+      z-index: 999;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 0, 128, 0.5), 0 0 10px rgba(0, 255, 204, 0.4);
+    }
+
+    /* Garis Berputar Warna-Warni Mengelilingi Panel */
+    .left-panel-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        #ff0055, 
+        #ffdd00, 
+        #00ffcc, 
+        #0099ff, 
+        #ff00ff, 
+        #ff0055
+      );
+      animation: rotatePanelRainbow 3.5s linear infinite;
+    }
+
+    @keyframes rotatePanelRainbow {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ISI KONTEN PANEL KIRI */
+    .left-panel-floating {
+      position: relative;
+      width: 100%;
+      background: rgba(10, 5, 18, 0.92);
       backdrop-filter: blur(12px);
       border-radius: 14px;
       padding: 12px;
-      z-index: 999;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 0, 128, 0.4);
-      border: 1px solid rgba(255, 0, 128, 0.5);
-      overflow: hidden;
-    }
-
-    .left-panel-floating::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, #ff0055, #ffd700, #00ffcc, #ff00ff);
-      animation: rainbowShift 3s linear infinite;
+      z-index: 1;
     }
 
     .left-panel-floating h3 {
@@ -77,13 +101,13 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: 800;
-      text-shadow: 0 0 8px #ff0055;
+      text-shadow: 0 0 8px #ff0055, 0 0 12px #00ffcc;
     }
 
     .bulk-textarea {
       width: 100%;
       height: 110px;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       border: 1px solid rgba(255, 215, 0, 0.3);
       border-radius: 8px;
       color: #00ffcc;
@@ -152,8 +176,8 @@
     }
 
     @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
@@ -502,7 +526,7 @@
         border-color: #00ff88;
       }
       100% {
-        box-shadow: 0 0 25px rgba(0, 255, 136, 1), 0 0 50px rgba(0, 255, 200, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.6);
+        box-shadow: 0 0 25px rgba(0, 255, 136, 1), 0 0 50px rgba(0, 255, 255, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.6);
         border-color: #a3ffce;
       }
     }
@@ -539,7 +563,7 @@
 
     /* RESPONSIVE LAYOUT UNTUK HP */
     @media (max-width: 1100px) {
-      .left-panel-floating {
+      .left-panel-wrapper {
         position: relative;
         top: 0;
         left: 0;
@@ -567,18 +591,20 @@
     <span>"JANGAN TERLALU MENGEJAR WANITA, BIAR WANITA YANG MENGEJARMU _ BY KO AL"</span>
   </div>
 
-  <!-- PANEL KIRI SLIM & FLOATING (POJOK KIRI UJUNG) -->
-  <div class="left-panel-floating">
-    <h3>⚡ AUTO OPENER LINK ⚡</h3>
-    <textarea id="bulkLinks" class="bulk-textarea" placeholder="Tempel link di sini...&#10;&#10;Contoh:&#10;https://domain1.com&#10;https://domain2.com"></textarea>
-    
-    <div class="bulk-controls">
-      <div class="delay-input-group">
-        <label for="delayInput">Jeda (dtk):</label>
-        <input type="number" id="delayInput" value="0.3" min="0.1" step="0.1">
+  <!-- PANEL KIRI FLOATING - AUTO OPENER LINK (DENGAN ANIMASI BORDER WARNA-WARNI BERGERAK 360°) -->
+  <div class="left-panel-wrapper">
+    <div class="left-panel-floating">
+      <h3>⚡ AUTO OPENER LINK ⚡</h3>
+      <textarea id="bulkLinks" class="bulk-textarea" placeholder="Tempel link di sini...&#10;&#10;Contoh:&#10;https://domain1.com&#10;https://domain2.com"></textarea>
+      
+      <div class="bulk-controls">
+        <div class="delay-input-group">
+          <label for="delayInput">Jeda (dtk):</label>
+          <input type="number" id="delayInput" value="0.3" min="0.1" step="0.1">
+        </div>
+        <button class="bulk-btn-open" onclick="openBulkLinks()">🚀 BUKA SEMUA LINK</button>
+        <button class="bulk-btn-clear" onclick="document.getElementById('bulkLinks').value=''">Bersihkan</button>
       </div>
-      <button class="bulk-btn-open" onclick="openBulkLinks()">🚀 BUKA SEMUA LINK</button>
-      <button class="bulk-btn-clear" onclick="document.getElementById('bulkLinks').value=''">Bersihkan</button>
     </div>
   </div>
 
@@ -591,7 +617,7 @@
     📍 Lokasi : <span id="loc">Mendeteksi...</span>
   </div>
 
-  <!-- TOMBOL AUTO KLIK -->
+  <!-- TOMBOL AUTO KLIK GOLD -->
   <button class="auto" onclick="openAll('domain')">🚀 AUTO KLIK DOMAIN</button>
   <button class="auto" onclick="openAll('landing')">🌎 AUTO KLIK LANDINGPAGE</button>
 
