@@ -26,7 +26,7 @@
     .bg {
       position: fixed;
       inset: 0;
-      background: url('https://cdn.areabermain.club/assets/cdn/az7/2026/08/05/20260805/c101be601de00812cca2dfc3f20795a5/b33bed7f-5c13-479c-89b1-0d8b091ef274.png') center center no-repeat;
+      background: url('https://cdn.areabermain.club/assets/cdn/az7/2026/08/10/20260810/261f962b0d0df7b96306c6059cc5930d/fbab35d9-7832-41da-bead-c3d9e63b73bf.png') center center no-repeat;
       background-size: cover;
       animation: bgZoom 20s linear infinite;
       z-index: -5;
@@ -36,7 +36,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.75));
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85));
     }
 
     @keyframes bgZoom {
@@ -45,20 +45,162 @@
       100% { transform: scale(1); }
     }
 
-    /* WRAPPER PANEL AUTO OPENER LINK (ANIMASI BORDER WARNA-WARNI BERGERAK MENGELILINGI PANEL) */
+    /* CONTAINER ELEMEN RAVEN & FEATHER */
+    .crow-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -4;
+      overflow: hidden;
+    }
+
+    /* ANIMASI SILUET BURUNG GAGAK (FLAPPING WINGS) */
+    .raven {
+      position: absolute;
+      bottom: -60px;
+      width: 40px;
+      height: 30px;
+      animation: flyUp linear infinite;
+      filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.9));
+    }
+
+    .raven .wing {
+      position: absolute;
+      width: 22px;
+      height: 12px;
+      background: #08080a;
+      border-radius: 80% 20% 10% 10%;
+      top: 8px;
+    }
+
+    .raven .wing.left {
+      left: 0;
+      transform-origin: right center;
+      animation: flapLeft 0.35s ease-in-out infinite alternate;
+    }
+
+    .raven .wing.right {
+      right: 0;
+      transform-origin: left center;
+      animation: flapRight 0.35s ease-in-out infinite alternate;
+    }
+
+    .raven .body {
+      position: absolute;
+      left: 17px;
+      top: 6px;
+      width: 6px;
+      height: 18px;
+      background: #111116;
+      border-radius: 50%;
+    }
+
+    .raven .head {
+      position: absolute;
+      left: 18px;
+      top: 1px;
+      width: 4px;
+      height: 6px;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    .raven .beak {
+      position: absolute;
+      left: 19px;
+      top: -2px;
+      width: 2px;
+      height: 4px;
+      background: #222;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+
+    .raven .tail {
+      position: absolute;
+      left: 18px;
+      top: 22px;
+      width: 4px;
+      height: 10px;
+      background: #08080a;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    @keyframes flapLeft {
+      0%   { transform: rotate(0deg) scaleY(1); }
+      100% { transform: rotate(55deg) scaleY(0.6); }
+    }
+
+    @keyframes flapRight {
+      0%   { transform: rotate(0deg) scaleY(1); }
+      100% { transform: rotate(-55deg) scaleY(0.6); }
+    }
+
+    @keyframes flyUp {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.6);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateY(-60vh) translateX(30px) scale(0.9);
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-115vh) translateX(-20px) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* ANIMASI BULU GAGAK JATUH (FALLING FEATHERS) */
+    .feather {
+      position: absolute;
+      top: -30px;
+      width: 8px;
+      height: 22px;
+      background: linear-gradient(180deg, #2a2a30, #050508);
+      border-radius: 80% 0 80% 0;
+      opacity: 0.8;
+      box-shadow: 0 0 3px rgba(0,0,0,0.8);
+      animation: fallFeather linear infinite;
+    }
+
+    @keyframes fallFeather {
+      0% {
+        transform: translateY(0) rotate(0deg) translateX(0);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.85;
+      }
+      50% {
+        transform: translateY(50vh) rotate(180deg) translateX(40px);
+      }
+      85% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(105vh) rotate(360deg) translateX(-30px);
+        opacity: 0;
+      }
+    }
+
+    /* WRAPPER PANEL AUTO OPENER LINK */
     .left-panel-wrapper {
       position: fixed;
       top: 50px;
       left: 15px;
       width: 250px;
       border-radius: 16px;
-      padding: 2px; /* Ketebalan garis border */
+      padding: 2px;
       z-index: 999;
       overflow: hidden;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 0, 128, 0.5), 0 0 10px rgba(0, 255, 204, 0.4);
     }
 
-    /* Garis Berputar Warna-Warni Mengelilingi Panel */
     .left-panel-wrapper::before {
       content: '';
       position: absolute;
@@ -82,7 +224,6 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* ISI KONTEN PANEL KIRI */
     .left-panel-floating {
       position: relative;
       width: 100%;
@@ -204,40 +345,7 @@
       color: #fff;
     }
 
-    /* FIRE PARTICLES CONTAINER */
-    .fire-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -4;
-    }
-
-    .fire-particle {
-      position: absolute;
-      bottom: -20px;
-      color: #ff4500;
-      text-shadow: 
-        0 0 8px #ff4500,
-        0 0 15px #ff7700,
-        0 0 25px #ff0000;
-      animation: riseFire linear infinite;
-    }
-
-    @keyframes riseFire {
-      0% {
-        transform: translateY(0) scale(0.6) rotate(0deg);
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-110vh) scale(1.3) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    /* HEADER WARNA-WARNI GLOW & NEON */
+    /* HEADER */
     .header {
       margin-top: 70px;
       text-align: center;
@@ -483,7 +591,7 @@
       text-align: center;
     }
 
-    /* TOMBOL GOPATH HIJAU NEON BERANIMASI & BERGERAK */
+    /* TOMBOL GOPATH HIJAU NEON */
     .gopath-animated-btn {
       width: 100%;
       max-width: 420px;
@@ -581,7 +689,7 @@
 <body>
 
   <div class="bg"></div>
-  <div class="fire-container" id="fireContainer"></div>
+  <div class="crow-container" id="crowContainer"></div>
 
   <!-- HAK CIPTA -->
   <div class="copyright-label">© Hak Cipta Rifaldo NSt</div>
@@ -591,7 +699,7 @@
     <span>"JANGAN TERLALU MENGEJAR WANITA, BIAR WANITA YANG MENGEJARMU _ BY KO AL"</span>
   </div>
 
-  <!-- PANEL KIRI FLOATING - AUTO OPENER LINK (DENGAN ANIMASI BORDER WARNA-WARNI BERGERAK 360°) -->
+  <!-- PANEL KIRI FLOATING - AUTO OPENER LINK -->
   <div class="left-panel-wrapper">
     <div class="left-panel-floating">
       <h3>⚡ AUTO OPENER LINK ⚡</h3>
@@ -755,28 +863,57 @@
 
     fetchUserIP();
 
-    /* FIRE PARTICLES GENERATOR */
-    function createFireParticle() {
-      const fireContainer = document.getElementById("fireContainer");
-      if (!fireContainer) return;
+    /* GENERATOR BURUNG GAGAK TERBANG */
+    function createCrow() {
+      const container = document.getElementById("crowContainer");
+      if (!container) return;
+
+      const raven = document.createElement("div");
+      raven.className = "raven";
       
-      const particle = document.createElement("div");
-      const fireIcons = ["🔥", "✨", "💥", "•"];
+      raven.innerHTML = `
+        <div class="wing left"></div>
+        <div class="wing right"></div>
+        <div class="body"></div>
+        <div class="head"></div>
+        <div class="beak"></div>
+        <div class="tail"></div>
+      `;
+
+      raven.style.left = Math.random() * (window.innerWidth - 40) + "px";
+
+      const duration = 6 + Math.random() * 6; // Waktu terbang 6 - 12 detik
+      raven.style.animationDuration = duration + "s";
       
-      particle.className = "fire-particle";
-      particle.innerHTML = fireIcons[Math.floor(Math.random() * fireIcons.length)];
-      particle.style.left = Math.random() * window.innerWidth + "px";
-      
-      const duration = 2 + Math.random() * 4;
-      particle.style.animationDuration = duration + "s";
-      particle.style.fontSize = (12 + Math.random() * 20) + "px";
-      
-      fireContainer.appendChild(particle);
-      
-      setTimeout(() => particle.remove(), duration * 1000);
+      const scale = 0.6 + Math.random() * 0.7;
+      raven.style.transform = `scale(${scale})`;
+
+      container.appendChild(raven);
+
+      setTimeout(() => raven.remove(), duration * 1000);
     }
 
-    setInterval(createFireParticle, 70);
+    /* GENERATOR BULU GAGAK JATUH */
+    function createFeather() {
+      const container = document.getElementById("crowContainer");
+      if (!container) return;
+
+      const feather = document.createElement("div");
+      feather.className = "feather";
+
+      feather.style.left = Math.random() * window.innerWidth + "px";
+
+      const duration = 5 + Math.random() * 5; // Waktu jatuh 5 - 10 detik
+      feather.style.animationDuration = duration + "s";
+
+      container.appendChild(feather);
+
+      setTimeout(() => feather.remove(), duration * 1000);
+    }
+
+    // Interval pemanggilan animasi
+    setInterval(createCrow, 1800);
+    setInterval(createFeather, 1200);
   </script>
 
 </body>
