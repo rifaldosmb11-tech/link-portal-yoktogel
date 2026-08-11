@@ -45,6 +45,39 @@
       100% { transform: scale(1); }
     }
 
+    /* EFEK KILATAN PETIR (LIGHTNING FLASH) */
+    .lightning-flash {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.85);
+      pointer-events: none;
+      z-index: -3;
+      opacity: 0;
+    }
+
+    .flash-active {
+      animation: lightningAnimation 0.4s ease-out;
+    }
+
+    @keyframes lightningAnimation {
+      0% { opacity: 0; }
+      10% { opacity: 0.8; }
+      15% { opacity: 0.1; }
+      25% { opacity: 0.95; }
+      40% { opacity: 0.2; }
+      100% { opacity: 0; }
+    }
+
+    /* CANVAS GARIS PETIR */
+    #lightningCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -3;
+    }
+
     /* CONTAINER ELEMEN RAVEN & FEATHER */
     .crow-container {
       position: fixed;
@@ -188,19 +221,28 @@
       }
     }
 
-    /* WRAPPER PANEL AUTO OPENER LINK */
+    /* WRAPPER PANEL AUTO OPENER LINK MODERN PREMIUM */
     .left-panel-wrapper {
       position: fixed;
       top: 50px;
       left: 15px;
-      width: 250px;
-      border-radius: 16px;
+      width: 260px;
+      border-radius: 20px;
       padding: 2px;
       z-index: 999;
       overflow: hidden;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 0, 128, 0.5), 0 0 10px rgba(0, 255, 204, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 
+                  0 0 20px rgba(255, 0, 128, 0.4), 
+                  0 0 15px rgba(0, 255, 204, 0.3);
+      animation: panelFloat 4s ease-in-out infinite alternate;
     }
 
+    @keyframes panelFloat {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-8px); }
+    }
+
+    /* BORDER PELANGI NEON ROTATING */
     .left-panel-wrapper::before {
       content: '';
       position: absolute;
@@ -210,16 +252,16 @@
       height: 200%;
       background: conic-gradient(
         #ff0055, 
-        #ffdd00, 
+        #ff9900, 
         #00ffcc, 
-        #0099ff, 
+        #0088ff, 
         #ff00ff, 
         #ff0055
       );
-      animation: rotatePanelRainbow 3.5s linear infinite;
+      animation: rotateRainbow 3s linear infinite;
     }
 
-    @keyframes rotatePanelRainbow {
+    @keyframes rotateRainbow {
       0%   { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
@@ -227,122 +269,172 @@
     .left-panel-floating {
       position: relative;
       width: 100%;
-      background: rgba(10, 5, 18, 0.92);
-      backdrop-filter: blur(12px);
-      border-radius: 14px;
-      padding: 12px;
+      background: rgba(12, 10, 22, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 18px;
+      padding: 14px;
       z-index: 1;
     }
 
+    /* JUDUL DENGAN ANIMASI GLOW & PETIR MENGAMBANG */
     .left-panel-floating h3 {
-      font-size: 12px;
+      font-size: 13px;
       text-align: center;
       color: #fff;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 800;
-      text-shadow: 0 0 8px #ff0055, 0 0 12px #00ffcc;
+      letter-spacing: 1.5px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-shadow: 0 0 10px rgba(255, 0, 85, 0.8), 0 0 20px rgba(0, 255, 204, 0.6);
     }
 
+    .lightning-icon {
+      display: inline-block;
+      animation: pulseLightning 1.2s ease-in-out infinite alternate;
+      color: #ffdd00;
+      filter: drop-shadow(0 0 6px #ffea00);
+    }
+
+    @keyframes pulseLightning {
+      0% { transform: scale(1) rotate(-5deg); filter: drop-shadow(0 0 4px #ffea00); }
+      100% { transform: scale(1.3) rotate(10deg); filter: drop-shadow(0 0 12px #ff0055); }
+    }
+
+    /* TEXTAREA DEEP GLOW */
     .bulk-textarea {
       width: 100%;
       height: 110px;
-      background: rgba(0, 0, 0, 0.85);
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 8px;
+      background: rgba(5, 5, 10, 0.9);
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      border-radius: 12px;
       color: #00ffcc;
-      padding: 8px;
+      padding: 10px;
       font-size: 11px;
       font-family: 'Consolas', monospace;
       resize: none;
       outline: none;
-      margin-bottom: 8px;
-      box-shadow: inset 0 0 8px rgba(0,0,0,0.9);
+      margin-bottom: 10px;
+      box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.9), 0 0 5px rgba(0, 255, 204, 0.1);
+      transition: all 0.3s ease;
     }
 
     .bulk-textarea:focus {
       border-color: #00ffcc;
-      box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.9), 0 0 15px rgba(0, 255, 204, 0.5);
     }
 
     .bulk-controls {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
     }
 
+    /* JEDA INPUT BOX */
     .delay-input-group {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 11px;
       color: #e0e0e0;
-      font-weight: 600;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 4px 8px;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .delay-input-group input {
-      width: 50px;
-      padding: 2px 4px;
+      width: 55px;
+      padding: 3px 6px;
       background: #000;
       border: 1px solid #ffd700;
       color: #ffd700;
-      border-radius: 4px;
+      border-radius: 6px;
       text-align: center;
-      font-weight: bold;
+      font-weight: 900;
       font-size: 11px;
       outline: none;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+      transition: all 0.3s;
     }
 
+    .delay-input-group input:focus {
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+    }
+
+    /* TOMBOL UTAMA DENGAN EFEK KILAU / SHIMMER */
     .bulk-btn-open {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       background: linear-gradient(135deg, #ff0055, #ff5500, #ffaa00);
       background-size: 200% 200%;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       color: #fff;
       font-weight: 900;
       font-size: 11px;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
-      transition: all 0.2s ease;
-      animation: gradientMove 3s ease infinite;
+      letter-spacing: 0.8px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(255, 0, 85, 0.5);
+      transition: all 0.3s ease;
+      animation: gradientShift 3s ease infinite;
     }
 
-    @keyframes gradientMove {
+    @keyframes gradientShift {
       0%   { background-position: 0% 50%; }
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
+    /* KILAUAN BERGERAK DI ATAS TOMBOL */
+    .bulk-btn-open::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: rotate(30deg);
+      animation: shimmer 2.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -60%; }
+      100% { left: 140%; }
+    }
+
     .bulk-btn-open:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(255, 0, 85, 0.8);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(255, 0, 85, 0.8), 0 0 15px rgba(255, 221, 0, 0.6);
     }
 
     .bulk-btn-clear {
       width: 100%;
-      padding: 5px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 6px;
+      padding: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
       color: #aaa;
       font-size: 10px;
       font-weight: bold;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
     }
 
     .bulk-btn-clear:hover {
-      background: rgba(255, 0, 85, 0.2);
+      background: rgba(255, 0, 85, 0.25);
+      border-color: #ff0055;
       color: #fff;
+      box-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
     }
 
     /* HEADER */
@@ -689,6 +781,11 @@
 <body>
 
   <div class="bg"></div>
+  
+  <!-- ELEMEN UNTUK EFEK PETIR -->
+  <div class="lightning-flash" id="lightningFlash"></div>
+  <canvas id="lightningCanvas"></canvas>
+
   <div class="crow-container" id="crowContainer"></div>
 
   <!-- HAK CIPTA -->
@@ -699,10 +796,14 @@
     <span>"JANGAN TERLALU MENGEJAR WANITA, BIAR WANITA YANG MENGEJARMU _ BY KO AL"</span>
   </div>
 
-  <!-- PANEL KIRI FLOATING - AUTO OPENER LINK -->
+  <!-- PANEL KIRI FLOATING - AUTO OPENER LINK MODERN PREMIUM -->
   <div class="left-panel-wrapper">
     <div class="left-panel-floating">
-      <h3>⚡ AUTO OPENER LINK ⚡</h3>
+      <h3>
+        <span class="lightning-icon">⚡</span> 
+        AUTO OPENER LINK 
+        <span class="lightning-icon">⚡</span>
+      </h3>
       <textarea id="bulkLinks" class="bulk-textarea" placeholder="Tempel link di sini...&#10;&#10;Contoh:&#10;https://domain1.com&#10;https://domain2.com"></textarea>
       
       <div class="bulk-controls">
@@ -911,9 +1012,132 @@
       setTimeout(() => feather.remove(), duration * 1000);
     }
 
-    // Interval pemanggilan animasi
+    // Interval pemanggilan animasi gagak & bulu
     setInterval(createCrow, 1800);
     setInterval(createFeather, 1200);
+
+    /* SINTESIS SUARA PETIR LEMBUT (WEB AUDIO API) */
+    let audioCtx = null;
+
+    function playSoftThunderSound() {
+      try {
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (!audioCtx) return;
+
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        // Membuat noise untuk efek gemuruh
+        const bufferSize = audioCtx.sampleRate * 2.5;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+
+        const whiteNoise = audioCtx.createBufferSource();
+        whiteNoise.buffer = buffer;
+
+        // Filter frekuensi rendah (Lowpass Filter) agar suara menjadi gema gemuruh halus
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 180; // Frekuensi rendah untuk gemuruh halus
+
+        // Pengatur Volume (Sangat Lembut ~12% volume)
+        const gainNode = audioCtx.createGain();
+        const now = audioCtx.currentTime;
+        gainNode.gain.setValueAtTime(0.01, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.12, now + 0.15); // Volume lembut puncak
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 2.3);
+
+        whiteNoise.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        whiteNoise.start(now);
+        whiteNoise.stop(now + 2.4);
+      } catch (e) {
+        // Mengabaikan error jika browser memblokir audio otomatis
+      }
+    }
+
+    // Mengaktifkan Audio Context saat ada interaksi pengguna pertama kali
+    document.addEventListener('click', () => {
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }, { once: true });
+
+    /* VISUALISASI KILATAN DAN GARIS PETIR */
+    const canvas = document.getElementById('lightningCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function drawBolt(startX, startY, length, angle, branchCapacity) {
+      if (branchCapacity <= 0) return;
+
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+
+      let currentX = startX;
+      let currentY = startY;
+
+      for (let i = 0; i < length; i++) {
+        currentX += Math.sin(angle) * 8 + (Math.random() - 0.5) * 12;
+        currentY += Math.cos(angle) * 8 + (Math.random() - 0.5) * 8;
+
+        ctx.lineTo(currentX, currentY);
+
+        if (Math.random() < 0.08 && branchCapacity > 1) {
+          drawBolt(currentX, currentY, Math.floor(length * 0.6), angle + (Math.random() - 0.5) * 0.8, branchCapacity - 1);
+        }
+      }
+
+      ctx.strokeStyle = "rgba(230, 245, 255, 0.9)";
+      ctx.lineWidth = 2;
+      ctx.shadowColor = "rgba(0, 255, 255, 0.8)";
+      ctx.shadowBlur = 12;
+      ctx.stroke();
+    }
+
+    function triggerLightning() {
+      const flashElem = document.getElementById('lightningFlash');
+      
+      // Flash layar
+      flashElem.classList.remove('flash-active');
+      void flashElem.offsetWidth; // Trigger reflow
+      flashElem.classList.add('flash-active');
+
+      // Gambar Garis PetIR
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const startX = Math.random() * canvas.width;
+      drawBolt(startX, 0, Math.floor(canvas.height / 10), 0, 3);
+
+      // Suara petir lembut dengan sedikit jeda (realistis)
+      setTimeout(playSoftThunderSound, 120 + Math.random() * 200);
+
+      // Bersihkan canvas petir setelah kilatan usai
+      setTimeout(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }, 450);
+
+      // Panggil lagi petir berikutnya secara acak (antara 5 hingga 15 detik)
+      const nextDelay = 5000 + Math.random() * 10000;
+      setTimeout(triggerLightning, nextDelay);
+    }
+
+    // Memulai rantai petir pertama setelah 3 detik
+    setTimeout(triggerLightning, 3000);
   </script>
 
 </body>
