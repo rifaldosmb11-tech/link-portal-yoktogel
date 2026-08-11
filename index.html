@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YOKTOGEL PORTAL</title>
 
+  <!-- FONT HOROR KHUSUS DARI GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&display=swap" rel="stylesheet">
+
   <style>
     /* GLOBAL RESET & BASE STYLES */
     * {
@@ -45,7 +50,7 @@
       100% { transform: scale(1); }
     }
 
-    /* EFEK KILATAN PETIR (LIGHTNING FLASH) */
+    /* EFEK KILATAN PETIR (LIGHTNING FLASH) - TANPA SUARA */
     .lightning-flash {
       position: fixed;
       inset: 0;
@@ -56,15 +61,15 @@
     }
 
     .flash-active {
-      animation: lightningAnimation 0.4s ease-out;
+      animation: lightningAnimation 0.35s ease-out;
     }
 
     @keyframes lightningAnimation {
       0% { opacity: 0; }
-      10% { opacity: 0.8; }
+      10% { opacity: 0.75; }
       15% { opacity: 0.1; }
-      25% { opacity: 0.95; }
-      40% { opacity: 0.2; }
+      25% { opacity: 0.9; }
+      40% { opacity: 0.15; }
       100% { opacity: 0; }
     }
 
@@ -437,52 +442,54 @@
       box-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
     }
 
-    /* HEADER */
+    /* HEADER HOROR BERDARAH & ESTETIK */
     .header {
-      margin-top: 70px;
+      margin-top: 60px;
       text-align: center;
-      font-size: clamp(32px, 6vw, 56px);
+      font-family: 'Nosifer', 'Creepster', cursive;
+      font-size: clamp(28px, 5vw, 52px);
       font-weight: 900;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       position: relative;
       
-      background: linear-gradient(90deg, #ff0055, #ffdd00, #00ffcc, #0099ff, #ff00ff, #ff0055);
-      background-size: 400% 400%;
+      /* Gradient Merah Darah, Ungu Gelap & Emas */
+      background: linear-gradient(180deg, #ffffff 0%, #ff1a1a 35%, #8b0000 70%, #d4af37 100%);
+      background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       
       animation: 
-        rainbowShift 5s ease infinite,
+        bloodShift 4s ease infinite,
         floatHeader 3s ease-in-out infinite alternate,
-        neonPulse 2s ease-in-out infinite alternate;
+        scaryBloodGlow 2.5s ease-in-out infinite alternate;
     }
 
-    @keyframes rainbowShift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @keyframes bloodShift {
+      0%   { background-position: 0% 0%; }
+      50%  { background-position: 0% 100%; }
+      100% { background-position: 0% 0%; }
     }
 
     @keyframes floatHeader {
       0%   { transform: translateY(0px) scale(1); }
-      100% { transform: translateY(-8px) scale(1.03); }
+      100% { transform: translateY(-6px) scale(1.02); }
     }
 
-    @keyframes neonPulse {
+    @keyframes scaryBloodGlow {
       0% {
-        filter: drop-shadow(0 0 10px rgba(255, 0, 85, 0.8)) 
-                drop-shadow(0 0 20px rgba(0, 255, 204, 0.6)) 
-                drop-shadow(0 4px 10px #000);
+        filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.9)) 
+                drop-shadow(0 0 15px rgba(255, 0, 0, 0.7)) 
+                drop-shadow(0 6px 4px #000);
       }
       50% {
-        filter: drop-shadow(0 0 25px rgba(255, 221, 0, 1)) 
-                drop-shadow(0 0 45px rgba(0, 153, 255, 0.8)) 
-                drop-shadow(0 0 60px rgba(255, 0, 255, 0.6));
+        filter: drop-shadow(0 0 20px rgba(255, 0, 50, 1)) 
+                drop-shadow(0 0 35px rgba(139, 0, 0, 0.9)) 
+                drop-shadow(0 0 45px rgba(212, 175, 55, 0.6));
       }
       100% {
-        filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.9)) 
-                drop-shadow(0 0 30px rgba(255, 0, 85, 0.7)) 
-                drop-shadow(0 6px 12px #000);
+        filter: drop-shadow(0 0 12px rgba(186, 12, 47, 0.9)) 
+                drop-shadow(0 0 25px rgba(255, 0, 0, 0.8)) 
+                drop-shadow(0 6px 8px #000);
       }
     }
 
@@ -782,7 +789,7 @@
 
   <div class="bg"></div>
   
-  <!-- ELEMEN UNTUK EFEK PETIR -->
+  <!-- ELEMEN VISUAL PETIR -->
   <div class="lightning-flash" id="lightningFlash"></div>
   <canvas id="lightningCanvas"></canvas>
 
@@ -817,8 +824,8 @@
     </div>
   </div>
 
-  <!-- HEADER -->
-  <div class="header">☠️YOKTOGEL PORTAL☠️</div>
+  <!-- HEADER HOROR BERDARAH ESTETIK -->
+  <div class="header">☠️ YOKTOGEL PORTAL ☠️</div>
 
   <!-- INFO IP & LOKASI -->
   <div class="glass">
@@ -1016,63 +1023,7 @@
     setInterval(createCrow, 1800);
     setInterval(createFeather, 1200);
 
-    /* SINTESIS SUARA PETIR LEMBUT (WEB AUDIO API) */
-    let audioCtx = null;
-
-    function playSoftThunderSound() {
-      try {
-        if (!audioCtx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) audioCtx = new AudioContext();
-        }
-        if (!audioCtx) return;
-
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-
-        // Membuat noise untuk efek gemuruh
-        const bufferSize = audioCtx.sampleRate * 2.5;
-        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const output = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          output[i] = Math.random() * 2 - 1;
-        }
-
-        const whiteNoise = audioCtx.createBufferSource();
-        whiteNoise.buffer = buffer;
-
-        // Filter frekuensi rendah (Lowpass Filter) agar suara menjadi gema gemuruh halus
-        const filter = audioCtx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 180; // Frekuensi rendah untuk gemuruh halus
-
-        // Pengatur Volume (Sangat Lembut ~12% volume)
-        const gainNode = audioCtx.createGain();
-        const now = audioCtx.currentTime;
-        gainNode.gain.setValueAtTime(0.01, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.12, now + 0.15); // Volume lembut puncak
-        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 2.3);
-
-        whiteNoise.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        whiteNoise.start(now);
-        whiteNoise.stop(now + 2.4);
-      } catch (e) {
-        // Mengabaikan error jika browser memblokir audio otomatis
-      }
-    }
-
-    // Mengaktifkan Audio Context saat ada interaksi pengguna pertama kali
-    document.addEventListener('click', () => {
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-    }, { once: true });
-
-    /* VISUALISASI KILATAN DAN GARIS PETIR */
+    /* VISUALISASI KILATAN DAN GARIS PETIR (RINGAN & TANPA SUARA) */
     const canvas = document.getElementById('lightningCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -1106,37 +1057,34 @@
       ctx.strokeStyle = "rgba(230, 245, 255, 0.9)";
       ctx.lineWidth = 2;
       ctx.shadowColor = "rgba(0, 255, 255, 0.8)";
-      ctx.shadowBlur = 12;
+      ctx.shadowBlur = 10;
       ctx.stroke();
     }
 
     function triggerLightning() {
       const flashElem = document.getElementById('lightningFlash');
       
-      // Flash layar
+      // Flash layar singkat
       flashElem.classList.remove('flash-active');
-      void flashElem.offsetWidth; // Trigger reflow
+      void flashElem.offsetWidth; // Reflow
       flashElem.classList.add('flash-active');
 
-      // Gambar Garis PetIR
+      // Gambar Garis Petir
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const startX = Math.random() * canvas.width;
       drawBolt(startX, 0, Math.floor(canvas.height / 10), 0, 3);
 
-      // Suara petir lembut dengan sedikit jeda (realistis)
-      setTimeout(playSoftThunderSound, 120 + Math.random() * 200);
-
-      // Bersihkan canvas petir setelah kilatan usai
+      // Hapus garis petir secara cepat
       setTimeout(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }, 450);
+      }, 350);
 
-      // Panggil lagi petir berikutnya secara acak (antara 5 hingga 15 detik)
-      const nextDelay = 5000 + Math.random() * 10000;
+      // Interval petir secara acak (ringan di CPU)
+      const nextDelay = 6000 + Math.random() * 10000;
       setTimeout(triggerLightning, nextDelay);
     }
 
-    // Memulai rantai petir pertama setelah 3 detik
+    // Memulai petir pertama setelah 3 detik
     setTimeout(triggerLightning, 3000);
   </script>
 
