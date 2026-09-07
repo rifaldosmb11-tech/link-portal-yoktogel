@@ -618,6 +618,44 @@
       100% { transform: scale(1.25) translateY(-2px); filter: drop-shadow(0 0 12px #ffdd00); }
     }
 
+    /* TAMPILAN LOGO AUTO KLIK DOMAIN BARU */
+    .auto-logo-btn {
+      display: block;
+      margin: 15px auto;
+      max-width: 280px;
+      width: 100%;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      outline: none;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      animation: logoFloat 3s ease-in-out infinite alternate;
+    }
+
+    .auto-logo-btn img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6)) 
+              drop-shadow(0 0 20px rgba(255, 170, 0, 0.4));
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+
+    .auto-logo-btn:hover img {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 18px rgba(255, 215, 0, 1)) 
+              drop-shadow(0 0 35px rgba(255, 69, 0, 0.8));
+    }
+
+    @keyframes logoFloat {
+      0% {
+        transform: translateY(0px);
+      }
+      100% {
+        transform: translateY(-6px);
+      }
+    }
+
     /* TOMBOL AUTO KLIK GOLD */
     .auto {
       width: 100%;
@@ -927,8 +965,12 @@
   <!-- HEADER HOROR BERDARAH ESTETIK -->
   <div class="header">☠️ YOKTOGEL PORTAL ☠️</div>
 
-  <!-- TOMBOL AUTO KLIK GOLD -->
-  <button class="auto" onclick="openAll('domain')">🚀 AUTO KLIK DOMAIN</button>
+  <!-- LOGO UTAMA AUTO KLIK DOMAIN (MENGGANTIKAN TOMBOL LAMA) -->
+  <button class="auto-logo-btn" onclick="openAll('domain')" title="Auto Klik Domain">
+    <img src="https://yok86408.com/assets/img/akw/logo.png" alt="Yoktogel Logo Domain">
+  </button>
+
+  <!-- TOMBOL AUTO KLIK LANDINGPAGE -->
   <button class="auto" onclick="openAll('landing')">🌎 AUTO KLIK LANDINGPAGE</button>
 
   <!-- MENU GRID BUTTONS -->
@@ -1128,59 +1170,39 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    function drawBolt(startX, startY, length, angle, branchCapacity) {
-      if (branchCapacity <= 0) return;
-
-      ctx.beginPath();
-      ctx.moveTo(startX, startY);
-
-      let currentX = startX;
-      let currentY = startY;
-
-      for (let i = 0; i < length; i++) {
-        currentX += Math.sin(angle) * 8 + (Math.random() - 0.5) * 12;
-        currentY += Math.cos(angle) * 8 + (Math.random() - 0.5) * 8;
-
-        ctx.lineTo(currentX, currentY);
-
-        if (Math.random() < 0.08 && branchCapacity > 1) {
-          drawBolt(currentX, currentY, Math.floor(length * 0.6), angle + (Math.random() - 0.5) * 0.8, branchCapacity - 1);
-        }
-      }
-
-      ctx.strokeStyle = "rgba(230, 245, 255, 0.9)";
-      ctx.lineWidth = 2;
-      ctx.shadowColor = "rgba(0, 255, 255, 0.8)";
-      ctx.shadowBlur = 10;
-      ctx.stroke();
-    }
-
-    function triggerLightning() {
-      const flashElem = document.getElementById('lightningFlash');
-      
-      // Flash layar singkat
-      flashElem.classList.remove('flash-active');
-      void flashElem.offsetWidth; // Reflow
-      flashElem.classList.add('flash-active');
-
-      // Gambar Garis Petir
+    function drawLightning() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const startX = Math.random() * canvas.width;
-      drawBolt(startX, 0, Math.floor(canvas.height / 10), 0, 3);
+      if (Math.random() > 0.96) {
+        const flash = document.getElementById('lightningFlash');
+        if (flash) {
+          flash.classList.add('flash-active');
+          setTimeout(() => flash.classList.remove('flash-active'), 350);
+        }
 
-      // Hapus garis petir secara cepat
-      setTimeout(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }, 350);
+        ctx.beginPath();
+        let x = Math.random() * canvas.width;
+        let y = 0;
+        ctx.moveTo(x, y);
 
-      // Interval petir secara acak (ringan di CPU)
-      const nextDelay = 6000 + Math.random() * 10000;
-      setTimeout(triggerLightning, nextDelay);
+        while (y < canvas.height) {
+          let nextX = x + (Math.random() - 0.5) * 60;
+          let nextY = y + Math.random() * 40 + 10;
+          ctx.lineTo(nextX, nextY);
+          x = nextX;
+          y = nextY;
+        }
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#00ffff';
+        ctx.stroke();
+
+        setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 120);
+      }
     }
 
-    // Memulai petir pertama setelah 3 detik
-    setTimeout(triggerLightning, 3000);
+    setInterval(drawLightning, 1000);
   </script>
-
 </body>
 </html>
