@@ -603,7 +603,7 @@
       100% { transform: scale(1.25) translateY(-2px); filter: drop-shadow(0 0 12px #ffdd00); }
     }
 
-    /* GAYA TOMBOL LOGO: BARU SESUAI PERMINTAAN */
+    /* GAYA TOMBOL LOGO */
     .logo-domain-btn {
       width: 100%;
       max-width: 420px;
@@ -647,7 +647,7 @@
       filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 30px rgba(255, 0, 85, 0.7));
     }
 
-    /* TOMBOL AUTO KLIK GOLD (UNTUK LANDINGPAGE) */
+    /* TOMBOL AUTO KLIK GOLD */
     .auto {
       width: 100%;
       max-width: 420px;
@@ -930,7 +930,7 @@
       <div class="bulk-controls">
         <div class="delay-input-group">
           <label for="delayInput">Jeda (dtk):</label>
-          <input type="number" id="delayInput" value="0.3" min="0.1" step="0.1">
+          <input type="number" id="delayInput" value="0.8" min="0.3" step="0.1">
         </div>
         <button class="bulk-btn-open" onclick="openBulkLinks()">🚀 BUKA SEMUA LINK</button>
         <button class="bulk-btn-clear" onclick="document.getElementById('bulkLinks').value=''">Bersihkan</button>
@@ -945,7 +945,6 @@
 
   <div class="header">☠️ YOKTOGEL PORTAL ☠️</div>
 
-  <!-- TOMBOL LOGO DOMAIN DIPERBARUI DENGAN LINK BARU -->
   <button class="logo-domain-btn" onclick="openAll('domain')">
     <img src="https://statics.hokibagus.club/logo_situs/logo_yoktogel.png" alt="Logo Domain Yoktogel">
   </button>
@@ -953,36 +952,50 @@
   <button class="auto" onclick="openAll('landing')">🌎 AUTO KLIK LANDINGPAGE</button>
 
   <div class="menu-grid">
-    <button class="quick-btn" onclick="window.open('https://yoktogel96.com')">FUSION X 1</button>
-    <button class="quick-btn" onclick="window.open('https://dkwl.b-cdn.net/d/yoktogel-kl2/register')">DKWL REGISTER</button>
-    <button class="quick-btn" onclick="window.open('https://rtpslotyok318.com')">RTP</button>
+    <button class="quick-btn" onclick="safeOpen('https://yoktogel96.com')">FUSION X 1</button>
+    <button class="quick-btn" onclick="safeOpen('https://dkwl.b-cdn.net/d/yoktogel-kl2/register')">DKWL REGISTER</button>
+    <button class="quick-btn" onclick="safeOpen('https://rtpslotyok318.com')">RTP</button>
 
-    <button class="quick-btn" onclick="window.open('https://yoktogel75.com')">FUSION X 2</button>
-    <button class="quick-btn" onclick="window.open('https://jalursitus.com/yoktogel')">LINK JALUR</button>
-    <button class="quick-btn" onclick="window.open('https://apkstore.vip/pwa/26548439')">❄️APK ANDROID</button>
+    <button class="quick-btn" onclick="safeOpen('https://yoktogel75.com')">FUSION X 2</button>
+    <button class="quick-btn" onclick="safeOpen('https://jalursitus.com/yoktogel')">LINK JALUR</button>
+    <button class="quick-btn" onclick="safeOpen('https://apkstore.vip/pwa/26548439')">❄️APK ANDROID</button>
 
-    <button class="quick-btn" onclick="window.open('https://dkwl.b-cdn.net/yoktogel-kl1')">DKWL 1</button>
-    <button class="quick-btn" onclick="window.open('https://yoktogel.it.com')">DOMAIN IT</button>
-    <button class="quick-btn" onclick="window.open('https://apkstore.vip/26548439/')">🍏APK IOS</button>
+    <button class="quick-btn" onclick="safeOpen('https://dkwl.b-cdn.net/yoktogel-kl1')">DKWL 1</button>
+    <button class="quick-btn" onclick="safeOpen('https://yoktogel.it.com')">DOMAIN IT</button>
+    <button class="quick-btn" onclick="safeOpen('https://apkstore.vip/26548439/')">🍏APK IOS</button>
 
-    <button class="quick-btn" onclick="window.open('https://dkwl.b-cdn.net/yoktogel-kl2')">DKWL 2</button>
-    <button class="quick-btn" onclick="window.open('https://yokblog193.com')">BLOG</button>
-    <button class="quick-btn" onclick="window.open('https://www.google.com/search?q=yoktogel')">LANDING RANK</button>
+    <button class="quick-btn" onclick="safeOpen('https://dkwl.b-cdn.net/yoktogel-kl2')">DKWL 2</button>
+    <button class="quick-btn" onclick="safeOpen('https://yokblog193.com')">BLOG</button>
+    <button class="quick-btn" onclick="safeOpen('https://www.google.com/search?q=yoktogel')">LANDING RANK</button>
   </div>
 
   <div class="gopath-center-container">
-    <button class="gopath-animated-btn" onclick="window.open('https://gopath.id/link_yoktogel', '_blank')">
+    <button class="gopath-animated-btn" onclick="safeOpen('https://gopath.id/link_yoktogel')">
       🔗 LINK GOPATH YOKTOGEL
     </button>
   </div>
 
-  <div class="footer">FULL STABLE VERSION - READY DEPLOY</div>
+  <div class="footer">FULL STABLE VERSION - MOBILE OPTIMIZED</div>
 
   <script>
+    // FUNGSI SAFEOPEN AGAR BISA MEMBUKA TAB BARU DI ANDROID & IOS TANPA DIBLOKIR BROWSER
+    function safeOpen(url) {
+      let win = window.open(url, '_blank');
+      if (!win || win.closed || typeof win == 'undefined') {
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+      }
+    }
+
     function openBulkLinks() {
       const text = document.getElementById("bulkLinks").value;
       const delayInput = parseFloat(document.getElementById("delayInput").value);
-      const delay = (isNaN(delayInput) || delayInput < 0.1 ? 0.3 : delayInput) * 1000;
+      const delay = (isNaN(delayInput) || delayInput < 0.3 ? 0.8 : delayInput) * 1000;
       
       if (!text || text.trim() === "") {
         alert("Silakan tempel atau masukkan link terlebih dahulu!");
@@ -1009,7 +1022,7 @@
 
       validUrls.forEach(function(url, index) {
         setTimeout(function() {
-          window.open(url, "_blank");
+          safeOpen(url);
         }, index * delay);
       });
     }
@@ -1037,7 +1050,9 @@
       }
 
       links.forEach((url, i) => {
-        setTimeout(() => window.open(url, "_blank"), i * 200);
+        setTimeout(() => {
+          safeOpen(url);
+        }, i * 400);
       });
     }
 
@@ -1084,6 +1099,7 @@
     function createCrow() {
       const container = document.getElementById("crowContainer");
       if (!container) return;
+      if (container.childElementCount > 6) return; // Pembatasan elemen DOM untuk menjaga performa HP
 
       const raven = document.createElement("div");
       raven.className = "raven";
@@ -1127,8 +1143,8 @@
       setTimeout(() => feather.remove(), duration * 1000);
     }
 
-    setInterval(createCrow, 1800);
-    setInterval(createFeather, 1200);
+    setInterval(createCrow, 2500);
+    setInterval(createFeather, 1800);
 
     const canvas = document.getElementById('lightningCanvas');
     const ctx = canvas.getContext('2d');
